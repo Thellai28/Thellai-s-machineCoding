@@ -11,7 +11,7 @@ import static services.BoardService.playerMap;
 public class DisplayInConsoleService {
     public static Scanner scanner = new Scanner( System.in);
 
-    public static void getPlayerInfoFromUser(){
+    public static void getPlayerInfoFromConsole(){
         String message = "\nHi, welcome to tic tac toe game, please choose your opponent" +
                 "\n 1.Player \n 2.Bot";
         System.out.println(message);
@@ -36,18 +36,19 @@ public class DisplayInConsoleService {
                 Player player1 = new Player(player_1_name, "HUMAN", 'X');
                 playerMap.put('X', player1);
 
-                Player botPlayer = new Player(player_1_name, "BOT", 'O');
+                Player botPlayer = new Player("J.A.R.V.I.S", "BOT", 'O');
                 playerMap.put('O', botPlayer);
                 break;
             } default:{
                 System.out.println("Invalid input, please choose again" );
-                getPlayerInfoFromUser();
+                printHorizontalLine();
+                getPlayerInfoFromConsole();
             }
         }
     }
 
     public static Move getCellCoOrdinatedFromUser( Player currentPlayer){
-        printLineSeparator();
+        printHorizontalLine();
         System.out.println("\nHi "+ currentPlayer.getName());
         System.out.print("\nPlease enter the row number: ");
         int row = scanner.nextInt();
@@ -77,7 +78,7 @@ public class DisplayInConsoleService {
     }
 
     public static void displayWinnerMessage(Player winner){
-        System.out.println(winner.getName() + "won the game");
+        System.out.println("Hurrah!! " + winner.getName() + " won the game");
         displayBoard();
     }
 
@@ -86,12 +87,12 @@ public class DisplayInConsoleService {
         scanner.close();
     }
 
-    public static void printLineSeparator(){
+    public static void printHorizontalLine(){
         System.out.println("\n-------------------------------------------------------------------------------");
     }
 
     public static void printInvalidCoOrdinatesMessage(){
-        System.out.println("\n-Invalid coOrdinated, please enter a valid coOrdinates");
+        System.out.print("\n-Invalid coOrdinated, please enter a valid coOrdinates");
     }
 
 }

@@ -44,7 +44,7 @@ public class BoardService {
         }
     }
 
-    public static void initiateTermination(){
+    public static void initiateGameTerminationProcess(){
         closeScanner();
         endGame();
     }
@@ -53,7 +53,7 @@ public class BoardService {
         Player currentPlayer = playerMap.get(currentPlayerSymbol);
         boolean isValidationFailed = false;
         Move currMove = null;
-        if( currentPlayer.getPlayerType().equals("HUMAN")){
+        if( currentPlayer.getPlayerType().equals("HUMAN") ){
             do {
                 if(isValidationFailed){
                     printInvalidCoOrdinatesMessage();
@@ -69,10 +69,10 @@ public class BoardService {
             board[currMove.getRow()][currMove.getCol()] = currMove.getPlayerSymbol();
             undoStack.push(currMove);
             if( checkWinner(currentPlayer)  ){
-                winner = playerMap.get(currentPlayerSymbol);
-                initiateTermination();
+                winner = currentPlayer;
+                initiateGameTerminationProcess();
             }else if ( isGameDraw() ){
-                initiateTermination();
+                initiateGameTerminationProcess();
             }
         }
     }

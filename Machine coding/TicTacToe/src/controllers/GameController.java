@@ -9,7 +9,7 @@ public class GameController {
 
     public static void main( String[] args ) {
         initializeBoard();
-        getPlayerInfoFromUser();
+        getPlayerInfoFromConsole();
 
         while( isGameRunning ){
             makeMove();
