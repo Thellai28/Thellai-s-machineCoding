@@ -1,0 +1,37 @@
+QUESTIONS :
+
+This is called as complex coding round in which are given with a train ticket reservation problem in which extra feature
+enhancement is given one after another.
+
+first simple reservation for 50 seats from A to F.
+After stations are added in middle like B, C, D, E. Where people can board any station and get down at any station
+assuming train is going from A to F. Then Waiting list are to be added after 50 seats reserved and if any reserved seat
+is cancelled we have to check the waiting list and need to confirm the seat if possible.After which we need to print
+the details of the PNR details.
+
+-----------------------------------------------------------------------------------------------------------------
+TIPS :
+    1. Use the access modifiers properly.Mostly use public static to ease of use.
+    
+    2. While getting inputs from the console, check for invalid inputs and cover that edge case.
+    3. Don't complicate your design, Keep your design as simple as possible.
+        Try to have more logic its relevant class, Don't try to use so many classes and complicate the system.
+    4. Understand your application's need and choose the data structure, you can either choose LIST, MAP, SET, HEAP
+        depending on your needs. First be clear with what data structure you want to use.
+    5. Use IDE's Generate setter and getter methods.
+    6. Reduce getting choices from user as much as possible because, you have to write display function to that,
+        you have to validate the choices, if the choice is not valid, then you have to again get the choices from
+        the use. This is an over head when it comes to the machine coding rounds. Ge only the mandatory choices from
+        the user.
+    7. Keep the collections data structures as minimum as possible because, you have to add and remove elements
+        accordingly, This is an over head.
+    8. Avoid pre-populating values, because you have to write a separate logic for it,
+        This might cause some ambiguity
+    9. Create classes as minimum as possible, because less classes means less headache to maintain them. Try to dump
+        the service related to that class in the same class, or declare a separate class for that service and declare
+        all the method as static.
+    10. Install inteli-j ide in your laptop.
+    11. Create a folder called repository and store all the DataStructures there and make them static, Import them
+        into your current file, then you can use them without specifying the class name in which it is defined.
+        You can initially define the data structures in their specific classes, once your application is completely
+        working then you can move them into the general repository and then import them into your current class.
