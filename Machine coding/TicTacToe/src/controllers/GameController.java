@@ -13,8 +13,9 @@ public class GameController {
 
         while( isGameRunning ){
             makeMove();
-            switchPlayer();
             displayBoard();
+            switchPlayer();
+
         }
 
         if( winner == null ){
@@ -24,3 +25,5 @@ public class GameController {
         }
     }
 }
+
+

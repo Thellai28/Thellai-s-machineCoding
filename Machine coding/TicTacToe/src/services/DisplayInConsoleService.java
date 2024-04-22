@@ -73,12 +73,16 @@ public class DisplayInConsoleService {
     }
 
     public static void displayGameDrawMessage(){
-        System.out.println("Game is draw");
+        printHorizontalLine();
+        System.out.println("\nGame is draw");
+        System.out.println();
         displayBoard();
     }
 
     public static void displayWinnerMessage(Player winner){
-        System.out.println("Hurrah!! " + winner.getName() + " won the game");
+        printHorizontalLine();
+        System.out.println("\nHurrah!! " + winner.getName() + " won the game");
+        System.out.println();
         displayBoard();
     }
 

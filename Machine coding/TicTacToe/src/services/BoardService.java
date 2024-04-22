@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import static services.BotPlayerService.botMove;
 import static services.DisplayInConsoleService.*;
 import static controllers.GameController.*;
 
@@ -53,6 +54,7 @@ public class BoardService {
         Player currentPlayer = playerMap.get(currentPlayerSymbol);
         boolean isValidationFailed = false;
         Move currMove = null;
+
         if( currentPlayer.getPlayerType().equals("HUMAN") ){
             do {
                 if(isValidationFailed){
@@ -62,13 +64,15 @@ public class BoardService {
                 isValidationFailed = true;
             } while (!isValidMove(currMove));
         }else{
-            // implement the bot functionality: 
+            currMove =  botMove();
+            System.out.println();
+            System.out.println("The bot move is " + currMove.getRow() + ", "+ currMove.getCol());
         }
 
         if( currMove != null ){
             board[currMove.getRow()][currMove.getCol()] = currMove.getPlayerSymbol();
             undoStack.push(currMove);
-            if( checkWinner(currentPlayer)  ){
+            if( checkWinner()  ){
                 winner = currentPlayer;
                 initiateGameTerminationProcess();
             }else if ( isGameDraw() ){
@@ -78,27 +82,35 @@ public class BoardService {
     }
 
 
-    public static boolean checkWinner( Player currPlayer ){
-        char playerSymbol = currPlayer.getSymbol();
+    public static boolean checkWinner(  ){
+        // Checking rows :
         for( int row = 0; row < 3; row++ ){
-            if( board[row][0] == playerSymbol
-                    && board[row][1] == playerSymbol && board[row][2] == playerSymbol ){
+            if( board[row][0] == currentPlayerSymbol
+                    && board[row][1] == currentPlayerSymbol && board[row][2] == currentPlayerSymbol ){
                 return true;
             }
         }
+        // Checking columns:
         for( int col = 0; col < 3; col++ ){
-            if( board[0][col] == playerSymbol
-                    && board[1][col] == playerSymbol && board[2][col] == playerSymbol ){
+            if( board[0][col] == currentPlayerSymbol
+                    && board[1][col] == currentPlayerSymbol && board[2][col] == currentPlayerSymbol ){
                 return true;
             }
         }
 
-        if( (board[0][0] == playerSymbol && board[1][1] == playerSymbol && board[2][2] == playerSymbol)
-        || board[2][0] == playerSymbol && board[1][1] == playerSymbol && board[0][2] == playerSymbol){
+        // checking diagonals :
+
+        if( (board[0][0] == currentPlayerSymbol && board[1][1] == currentPlayerSymbol
+                && board[2][2] == currentPlayerSymbol) ||
+                (board[2][0] == currentPlayerSymbol && board[1][1] == currentPlayerSymbol
+                        && board[0][2] == currentPlayerSymbol)){
             return true;
         }
         return false;
     }
+
+
+
 
     public static boolean isGameDraw(){
         for( int row = 0; row < 3; row++ ){
@@ -110,6 +122,5 @@ public class BoardService {
         }
         return true;
     }
-
 
 }
