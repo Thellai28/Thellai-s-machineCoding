@@ -15,7 +15,6 @@ public class GameController {
             makeMove();
             displayBoard();
             switchPlayer();
-
         }
 
         if( winner == null ){
