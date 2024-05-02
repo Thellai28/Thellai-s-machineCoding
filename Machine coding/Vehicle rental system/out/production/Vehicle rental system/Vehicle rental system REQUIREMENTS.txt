@@ -2,23 +2,21 @@ Requirements for a Vehicle rental system :
 
 1. The system will support the renting of different automobiles like cars, trucks, SUVs, vans, and motorcycles.
 2. This rental system will have some stations where cars will be parked.
-3. Every station will have some cars (SUV, Hatchback, Bike, Sedan, etc.) and will have some fixed prices for each type of car ($11/hour for SUV, 12$/per hour for Sedan, etc.)
+3. Every platforms will have some cars (SUV, Hatchback, Bike, Sedan, etc.) and will have some fixed prices for each type of car ($11/hour for SUV, 12$/per hour for Sedan, etc.)
 4. Each vehicle should be added with details, including a parking stall number which helps to locate the vehicle.
 5. The system should be able to retrieve information like which member took a particular vehicle or what vehicles have been rented out by a specific member.
 //6. The system should collect a late-fee for vehicles returned after the due date.
-6. Members should be able to search the vehicle inventory and reserve any available vehicle. When a user searches for a car - list all stations with that type of available car + station with the lowest price should be on top followed by second cheapest and so on..(order by increasing per hour price)
+6. Members should be able to search the vehicle inventory and reserve any available vehicle. When a user searches for a car - list all stations with that type of available car + platforms with the lowest price should be on top followed by second cheapest and so on..(order by increasing per hour price)
 7. The system should maintain a vehicle log to track all events related to the vehicles.
-8. User can book a car from any station and drop at same or any other station
+8. User can book a car from any platforms and drop at same or any other statio
+9. The application should support multithread which is responsible for showing the current time. This timer will be displayed in every option that is shown in the command prompt.
 
 
 Operations supported in this application : 
 
-1. Onboard station - (station_name, List
 2. Search Vehicle
 3. Book vehicle
 4. Drop vehicle
 5. Members should be able to cancel their reservations.
 6. Station Report - available car of each type, booked car of each type, etc.
 
-
-------------------------------------------------------------------
