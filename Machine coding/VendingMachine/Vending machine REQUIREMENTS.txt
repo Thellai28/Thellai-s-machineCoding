@@ -1,0 +1,26 @@
+REFERENCE CODE LINKS : 
+https://javarevisited.blogspot.com/2016/06/design-vending-machine-in-java.html
+https://medium.com/@mkbhuktar/design-vending-machine-in-java-c566f4820844
+
+-------------------------------------------------------------------------------------------------------
+
+
+
+Design a vending machine, the vending machine should have the following capabilities.
+
+
+1. Display a list of available products.
+2. Allow user to select select item and get price
+3. Accepts coins of 1,5,10,25 Cents i.e. penny, nickel, dime, and quarter.
+4. Dispense the selected product and return change if necessary.
+5. Allow user to take refund by canceling the request.
+6. Return the selected product and remaining change if any
+
+The user can experience the blow mentioned exceptions, take care of all the below mentioned situtaions to ensure better customer experience.
+1. Sold out
+2. Not fully paid
+3. Not enough changes
+
+
+ 
+
