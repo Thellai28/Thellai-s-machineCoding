@@ -57,19 +57,13 @@ public class VendingMachineController {
         }
         float remainingAmount = amountFromUser - payableAmount;
 
-        System.out.println("FROM recievePaymentAndReturnChange method, the amount remaining is " + remainingAmount );
-        boolean status =  remainingAmount > 0.0f;
-        System.out.println("  remainingAmount > 0.0f ? " + status);
-
         if( remainingAmount > 0.0f){
             String formattedString = String.format("🎉🎉 Your order is placed, " +
                     "Here is your change : %.2f💲 , Thank you visit again 😃😃", remainingAmount);
-            System.out.println();
+            System.out.println(formattedString);
         }else{
-            System.out.println("kee kee kee, i didn't display the amount");
             System.out.println("🎉🎉 Your order is placed, Thanks you visit again 😃😃");
         }
-        System.out.println(" is skipped the if else in receivePaymentAndReturnChange method");
     }
 
 
