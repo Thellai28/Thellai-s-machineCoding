@@ -23,11 +23,11 @@ public class BookingController {
 
        }else if( passenger.getBerthPreference().equalsIgnoreCase("UPPER") ||
                passenger.getBerthPreference().equalsIgnoreCase("MIDDLE") ){
+
            BookingService.bookUpperOrMiddleBerth(passenger);
 
        }else{
            BookingService.bookRacBerth(passenger);
        }
     }
-
 }
