@@ -1,12 +1,12 @@
 package model;
 
-public class User {
+public class Passenger {
     private String name;
     private int age;
     private String BerthPreference;
     private String gender;
 
-    public User( int age, String berthPreference, String gender, String name ) {
+    public Passenger( int age, String berthPreference, String gender, String name ) {
         this.age = age;
         BerthPreference = berthPreference;
         this.gender = gender;

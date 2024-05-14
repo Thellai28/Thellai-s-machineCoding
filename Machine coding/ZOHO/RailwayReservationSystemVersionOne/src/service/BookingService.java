@@ -1,8 +1,8 @@
 package service;
 
+import model.Passenger;
 import model.Seat;
 import model.Ticket;
-import model.User;
 import repository.RailwayReservationSystemRepository;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class BookingService {
 
-    public static User getUserDetails(){
+    public static Passenger getUserDetails(){
 
         String name = UserInputOutputService.getUserName();
         int age = UserInputOutputService.getUserAge();
@@ -26,16 +26,16 @@ public class BookingService {
             berthPreference = availableBerths.get(idx);
         }
 
-        return new User(age, berthPreference, gender, name);
+        return new Passenger(age, berthPreference, gender, name);
     }
 
 
-    public static void bookLowerBerth( User user ){
+    public static void bookLowerBerth( Passenger passenger ){
 
-        if( isEligibleForLowerSeat(user) ){
-            Seat chosenSeat = RailwayReservationSystemRepository.getPreferredSeat(user.getBerthPreference());
-            assignUserForSeat(user, chosenSeat);
-            Ticket ticket = createTicket(user, chosenSeat);
+        if( isEligibleForLowerSeat(passenger) ){
+            Seat chosenSeat = RailwayReservationSystemRepository.getPreferredSeat(passenger.getBerthPreference());
+            assignUserForSeat(passenger, chosenSeat);
+            Ticket ticket = createTicket(passenger, chosenSeat);
             saveTicketIntoTicketMap(ticket);
 
             UserInputOutputService.printTicketConfirmationMessage(ticket);
@@ -46,44 +46,44 @@ public class BookingService {
     }
 
 
-    public static void bookUpperOrMiddleBerth( User user ){
-        Seat chosenSeat = RailwayReservationSystemRepository.getPreferredSeat(user.getBerthPreference());
-        assignUserForSeat(user, chosenSeat);
-        Ticket ticket = createTicket(user, chosenSeat);
+    public static void bookUpperOrMiddleBerth( Passenger passenger ){
+        Seat chosenSeat = RailwayReservationSystemRepository.getPreferredSeat(passenger.getBerthPreference());
+        assignUserForSeat(passenger, chosenSeat);
+        Ticket ticket = createTicket(passenger, chosenSeat);
         saveTicketIntoTicketMap(ticket);
 
         UserInputOutputService.printTicketConfirmationMessage(ticket);
     }
 
 
-    public static void bookRacBerth( User user ){
+    public static void bookRacBerth( Passenger passenger ){
 
         boolean isRacFull =  RailwayReservationSystemRepository.isRacFull();
         if( !isRacFull ){
-            Seat racSeat = RailwayReservationSystemRepository.getPreferredSeat(user.getBerthPreference());
+            Seat racSeat = RailwayReservationSystemRepository.getPreferredSeat(passenger.getBerthPreference());
             if( racSeat != null ){
-                assignUserForSeat(user, racSeat);
-                addUserIntoRacQueue(user);
+                assignUserForSeat(passenger, racSeat);
+                addUserIntoRacQueue(passenger);
 
-                Ticket ticket = createTicket(user, racSeat);
+                Ticket ticket = createTicket(passenger, racSeat);
                 saveTicketIntoTicketMap(ticket);
 
                 UserInputOutputService.printTicketConfirmationMessage(ticket);
             }else{
-                checkAndAddUserIntoWaitingList(user);
+                checkAndAddUserIntoWaitingList(passenger);
             }
         }else{
-            checkAndAddUserIntoWaitingList(user);
+            checkAndAddUserIntoWaitingList(passenger);
         }
     }
 
-    private static void checkAndAddUserIntoWaitingList( User user ){
+    private static void checkAndAddUserIntoWaitingList( Passenger passenger ){
         boolean isWaitingListFull = RailwayReservationSystemRepository.isWaitingListFull();
 
         if( !isWaitingListFull ){
-            addUserIntoWaitingList(user);
+            addUserIntoWaitingList(passenger);
 
-            String message = "‼️‼️Your preferred seat is not available, so adding " + user.getName() + " into waiting list";
+            String message = "‼️‼️Your preferred seat is not available, so adding " + passenger.getName() + " into waiting list";
             UserInputOutputService.printMessageAndAddOneBlankLine(message);
         }else{
 
@@ -104,11 +104,11 @@ public class BookingService {
     }
 
 
-    private static boolean isEligibleForLowerSeat( User user){
+    private static boolean isEligibleForLowerSeat( Passenger passenger ){
 
-        if( user.getAge() >= 60 ){
+        if( passenger.getAge() >= 60 ){
             return true;
-        }else if ( user.getGender().equalsIgnoreCase("FEMALE") ){
+        }else if ( passenger.getGender().equalsIgnoreCase("FEMALE") ){
             boolean haveChildren = UserInputOutputService.getChildrenInformation();
             if( haveChildren ){
                 return true;
@@ -117,19 +117,19 @@ public class BookingService {
         return false;
     }
 
-    private static void assignUserForSeat( User user, Seat chosenSeat ){
-        chosenSeat.getUserList().add(user);
+    private static void assignUserForSeat( Passenger passenger, Seat chosenSeat ){
+        chosenSeat.getUserList().add(passenger);
     }
-    private static void addUserIntoRacQueue( User user ){
-        RailwayReservationSystemRepository.addIntoRacQueue(user);
-    }
-
-    private static void addUserIntoWaitingList( User user ){
-        RailwayReservationSystemRepository.addIntoWaitingListQueue(user);
+    private static void addUserIntoRacQueue( Passenger passenger ){
+        RailwayReservationSystemRepository.addIntoRacQueue(passenger);
     }
 
-    private static Ticket createTicket( User user, Seat chosenSeatForBooking ){
-        return new Ticket(user, chosenSeatForBooking);
+    private static void addUserIntoWaitingList( Passenger passenger ){
+        RailwayReservationSystemRepository.addIntoWaitingListQueue(passenger);
+    }
+
+    private static Ticket createTicket( Passenger passenger, Seat chosenSeatForBooking ){
+        return new Ticket(passenger, chosenSeatForBooking);
     }
 
     private static void saveTicketIntoTicketMap( Ticket ticket ){

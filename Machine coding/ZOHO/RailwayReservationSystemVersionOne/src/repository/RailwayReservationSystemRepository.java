@@ -1,6 +1,6 @@
 package repository;
 
-import model.User;
+import model.Passenger;
 import model.RailwayReservationSystem;
 import model.Seat;
 import model.Ticket;
@@ -39,12 +39,12 @@ public class RailwayReservationSystemRepository {
         return railwayReservationSystem.getWaitingListQueue().size() >= railwayReservationSystem.getWAITING_LIST_LIMIT();
     }
 
-    public static void addIntoWaitingListQueue( User user ){
-        railwayReservationSystem.getWaitingListQueue().add(user);
+    public static void addIntoWaitingListQueue( Passenger passenger ){
+        railwayReservationSystem.getWaitingListQueue().add(passenger);
     }
 
-    public static void addIntoRacQueue( User user ){
-            railwayReservationSystem.getRacQueue().add(user);
+    public static void addIntoRacQueue( Passenger passenger ){
+            railwayReservationSystem.getRacQueue().add(passenger);
     }
 
     public static void addTicketIntoTicketMap( Ticket ticket ){
@@ -52,7 +52,7 @@ public class RailwayReservationSystemRepository {
     }
 
 
-    public static List<User> getChildList(){
+    public static List<Passenger> getChildList(){
         return railwayReservationSystem.getChildrenList();
     }
 
@@ -60,16 +60,16 @@ public class RailwayReservationSystemRepository {
         return railwayReservationSystem.getTicketMap().get(ticketNumber);
     }
 
-    public static User getUserFromRacQueue(){
-        Queue<User> racQueue = railwayReservationSystem.getRacQueue();
+    public static Passenger getUserFromRacQueue(){
+        Queue<Passenger> racQueue = railwayReservationSystem.getRacQueue();
         if( !racQueue.isEmpty()) {
             return railwayReservationSystem.getRacQueue().remove();
         }
         return null;
     }
 
-    public static User getUserFromWaitingList(){
-        Queue<User> waitingListQueue = railwayReservationSystem.getWaitingListQueue();
+    public static Passenger getUserFromWaitingList(){
+        Queue<Passenger> waitingListQueue = railwayReservationSystem.getWaitingListQueue();
         if( !waitingListQueue.isEmpty() ){
             return waitingListQueue.remove();
         }

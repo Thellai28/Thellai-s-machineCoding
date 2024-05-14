@@ -5,9 +5,9 @@ import java.util.*;
 public class RailwayReservationSystem {
     private List<Seat> seatList;
     private Map<Integer, Ticket> ticketMap;
-    private Queue<User> racQueue;
-    private Queue<User> waitingListQueue;
-    private List<User> childrenList;
+    private Queue<Passenger> racQueue;
+    private Queue<Passenger> waitingListQueue;
+    private List<Passenger> childrenList;
     private final int RAC_LIMIT = 18; // 18
     private final int WAITING_LIST_LIMIT = 10;// 10
 
@@ -34,7 +34,6 @@ public class RailwayReservationSystem {
 
             seatList.add( newSeat );
         }
-       // seatList.add( new Seat(2, 1, "RAC"));
         return seatList;
     }
 
@@ -45,11 +44,11 @@ public class RailwayReservationSystem {
         return RAC_LIMIT;
     }
 
-    public Queue<User> getRacQueue() {
+    public Queue<Passenger> getRacQueue() {
         return racQueue;
     }
 
-    public void setRacQueue( Queue<User> racQueue ) {
+    public void setRacQueue( Queue<Passenger> racQueue ) {
         this.racQueue = racQueue;
     }
 
@@ -73,19 +72,19 @@ public class RailwayReservationSystem {
         return WAITING_LIST_LIMIT;
     }
 
-    public Queue<User> getWaitingListQueue() {
+    public Queue<Passenger> getWaitingListQueue() {
         return waitingListQueue;
     }
 
-    public void setWaitingListQueue( Queue<User> waitingListQueue ) {
+    public void setWaitingListQueue( Queue<Passenger> waitingListQueue ) {
         this.waitingListQueue = waitingListQueue;
     }
 
-    public List<User> getChildrenList() {
+    public List<Passenger> getChildrenList() {
         return childrenList;
     }
 
-    public void setChildrenList( List<User> childrenList ) {
+    public void setChildrenList( List<Passenger> childrenList ) {
         this.childrenList = childrenList;
     }
 }

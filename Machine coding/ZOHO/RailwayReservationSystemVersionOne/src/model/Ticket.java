@@ -4,10 +4,10 @@ public class Ticket {
     private static int idGenerator = 1;
     private int ticketNumber;
     private Seat bookedSeat;
-    private User bookedUser;
+    private Passenger bookedPassenger;
 
-    public Ticket( User bookedUser, Seat bookedSeat ) {
-        this.bookedUser = bookedUser;
+    public Ticket( Passenger bookedPassenger, Seat bookedSeat ) {
+        this.bookedPassenger = bookedPassenger;
         this.bookedSeat = bookedSeat;
         this.ticketNumber = idGenerator++;
     }
@@ -15,12 +15,12 @@ public class Ticket {
     //--------------< Getter & Setters >------------------------------
 
 
-    public User getBookedUser() {
-        return bookedUser;
+    public Passenger getBookedUser() {
+        return bookedPassenger;
     }
 
-    public void setBookedPerson( User bookedUser ) {
-        this.bookedUser = bookedUser;
+    public void setBookedPerson( Passenger bookedPassenger ) {
+        this.bookedPassenger = bookedPassenger;
     }
 
     public Seat getBookedSeat() {

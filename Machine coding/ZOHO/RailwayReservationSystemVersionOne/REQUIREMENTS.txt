@@ -9,7 +9,7 @@ The application should have four functionalities.
 Conditions for booking: 
 
 There are a total of 63 berths for 63 confirmed tickets, 9 berths for 18 RAC tickets and 10 tickets in waiting-list. If the waiting-list ticket count 
-goes above 10, print as ‘No tickets available’. The following passenger details should be obtained from the user. 
+goes above 10, print as ‘No tickets available’. The following passenger details should be obtained from the passenger.
 
 1. Name 
 2. Age 

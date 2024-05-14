@@ -19,7 +19,7 @@ public class CancelBookingController {
         UserInputOutputService.printMessageAndAddOneBlankLine(message);
 
         if( !ticket.getBookedSeat().getBerth().equalsIgnoreCase("RAC") ){
-            // If a confirmed User cancels seat, then a RAC user will move to confirmed seat:
+            // If a confirmed Passenger cancels seat, then a RAC user will move to confirmed seat:
             CancelBookingService.moveOneUserFromRacToConfirmation(ticket.getBookedSeat());
         }else{
             // If a RAC user cancels seat, we directly move one person from Waiting list to RAC

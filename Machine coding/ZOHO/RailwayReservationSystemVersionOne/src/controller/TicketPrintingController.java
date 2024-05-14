@@ -1,7 +1,6 @@
 package controller;
 
 import model.Ticket;
-import model.User;
 import repository.RailwayReservationSystemRepository;
 import service.UserInputOutputService;
 

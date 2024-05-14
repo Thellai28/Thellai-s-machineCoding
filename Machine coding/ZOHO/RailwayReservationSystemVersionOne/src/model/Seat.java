@@ -7,21 +7,21 @@ public class Seat {
     private int seatNumber;
     private String berth;
     private int seatCapacity;
-    private List<User> userList;
+    private List<Passenger> passengerList;
 
     public Seat( int seatCapacity, int seatNumber, String berth ) {
         this.seatCapacity = seatCapacity;
         this.seatNumber = seatNumber;
         this.berth = berth;
-        this.userList = new ArrayList<>();
+        this.passengerList = new ArrayList<>();
     }
 
 
     //------------< Getters & setters >----------------------------------------
 
 
-    public List<User> getUserList() {
-        return userList;
+    public List<Passenger> getUserList() {
+        return passengerList;
     }
 
 

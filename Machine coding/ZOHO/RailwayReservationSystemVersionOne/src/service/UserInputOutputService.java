@@ -84,8 +84,8 @@ public class UserInputOutputService {
         System.out.println("⚠️ Printing all booked tickets ⚠️");
         for (Ticket ticket : ticketList ){
             System.out.println("Ticket Number : " + ticket.getTicketNumber());
-            System.out.println("User name : " + ticket.getBookedUser().getName());
-            System.out.println("User age : " + ticket.getBookedUser().getAge());
+            System.out.println("Passenger name : " + ticket.getBookedUser().getName());
+            System.out.println("Passenger age : " + ticket.getBookedUser().getAge());
             System.out.println("Booked seat number : " + ticket.getBookedSeat().getSeatNumber());
             System.out.println("Booked seat berth : " + ticket.getBookedSeat().getBerth());
 

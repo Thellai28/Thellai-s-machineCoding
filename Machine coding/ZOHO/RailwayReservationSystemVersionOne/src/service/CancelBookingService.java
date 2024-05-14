@@ -2,7 +2,7 @@ package service;
 
 import model.Seat;
 import model.Ticket;
-import model.User;
+import model.Passenger;
 import repository.RailwayReservationSystemRepository;
 
 import java.util.List;
@@ -10,21 +10,21 @@ import java.util.List;
 public class CancelBookingService {
 
     public static void moveOneUserFromRacToConfirmation( Seat cancelledSeat ){
-        User userFromRacQueue = RailwayReservationSystemRepository.getUserFromRacQueue();
+        Passenger passengerFromRacQueue = RailwayReservationSystemRepository.getUserFromRacQueue();
 
-        if( userFromRacQueue != null ){
+        if( passengerFromRacQueue != null ){
 
-            Seat racSeat = getSeatOfRacUser(userFromRacQueue);
+            Seat racSeat = getSeatOfRacUser(passengerFromRacQueue);
             if( racSeat != null ){
-                removeUserFromSeat(racSeat, userFromRacQueue);
+                removeUserFromSeat(racSeat, passengerFromRacQueue);
 
-                addUserIntoSeat(cancelledSeat, userFromRacQueue);
-                changeBerthPreferenceOfUser(cancelledSeat, userFromRacQueue);
+                addUserIntoSeat(cancelledSeat, passengerFromRacQueue);
+                changeBerthPreferenceOfUser(cancelledSeat, passengerFromRacQueue);
 
-                String message = "‼️‼️ moving " + userFromRacQueue.getName() +" from Rac to confirmed ticket";
+                String message = "‼️‼️ moving " + passengerFromRacQueue.getName() +" from Rac to confirmed ticket";
                 UserInputOutputService.printMessageAndAddOneBlankLine(message);
 
-                Ticket ticket = createTicket(userFromRacQueue, cancelledSeat);
+                Ticket ticket = createTicket(passengerFromRacQueue, cancelledSeat);
                 saveTicketIntoTicketMap(ticket);
 
                 UserInputOutputService.printTicketConfirmationMessage(ticket);
@@ -39,19 +39,19 @@ public class CancelBookingService {
     }
 
     public static void moveOneUserFromWaitingListToRac(){
-        User userFromWaitingList = RailwayReservationSystemRepository.getUserFromWaitingList();
+        Passenger passengerFromWaitingList = RailwayReservationSystemRepository.getUserFromWaitingList();
 
-        if( userFromWaitingList != null ){
+        if( passengerFromWaitingList != null ){
 
             Seat availableRacSeat = getAvailableRacSeat();
             if( availableRacSeat != null ){
-                String message = "‼️‼️Moving " + userFromWaitingList.getName()+ " from Waiting list to RAC list";
+                String message = "‼️‼️Moving " + passengerFromWaitingList.getName()+ " from Waiting list to RAC list";
                 UserInputOutputService.printMessageAndAddOneBlankLine(message);
 
-                addUserIntoSeat(availableRacSeat, userFromWaitingList);
-                RailwayReservationSystemRepository.addIntoRacQueue(userFromWaitingList);
+                addUserIntoSeat(availableRacSeat, passengerFromWaitingList);
+                RailwayReservationSystemRepository.addIntoRacQueue(passengerFromWaitingList);
 
-                Ticket ticket = createTicket(userFromWaitingList, availableRacSeat);
+                Ticket ticket = createTicket(passengerFromWaitingList, availableRacSeat);
                 UserInputOutputService.printTicketConfirmationMessage(ticket);
             }
         }else{
@@ -64,29 +64,29 @@ public class CancelBookingService {
         return RailwayReservationSystemRepository.getTicket(ticketNumber);
     }
 
-    public static void removeUserFromSeat( Seat seat, User user ){
-        seat.getUserList().remove(user);
+    public static void removeUserFromSeat( Seat seat, Passenger passenger ){
+        seat.getUserList().remove(passenger);
     }
 
 
 
-    private static Ticket createTicket( User user, Seat chosenSeatForBooking ){
-        return new Ticket(user, chosenSeatForBooking);
+    private static Ticket createTicket( Passenger passenger, Seat chosenSeatForBooking ){
+        return new Ticket(passenger, chosenSeatForBooking);
     }
 
     private static void saveTicketIntoTicketMap( Ticket ticket ){
         RailwayReservationSystemRepository.addTicketIntoTicketMap(ticket);
     }
 
-    private static void addUserIntoSeat( Seat seat, User user ){
-        seat.getUserList().add(user);
+    private static void addUserIntoSeat( Seat seat, Passenger passenger ){
+        seat.getUserList().add(passenger);
     }
 
-    private static Seat getSeatOfRacUser( User user ){
+    private static Seat getSeatOfRacUser( Passenger passenger ){
         List<Seat> allSeatsList = RailwayReservationSystemRepository.getAllSeats();
 
         for( Seat seat : allSeatsList ){
-            if( seat.getBerth().equalsIgnoreCase("RAC") && seat.getUserList().contains(user) ){
+            if( seat.getBerth().equalsIgnoreCase("RAC") && seat.getUserList().contains(passenger) ){
                 return seat;
             }
         }
@@ -97,7 +97,7 @@ public class CancelBookingService {
         return RailwayReservationSystemRepository.getPreferredSeat("RAC");
     }
 
-    private static void changeBerthPreferenceOfUser(Seat cancelledSeat, User user ){
-        user.setBerthPreference(cancelledSeat.getBerth());
+    private static void changeBerthPreferenceOfUser(Seat cancelledSeat, Passenger passenger ){
+        passenger.setBerthPreference(cancelledSeat.getBerth());
     }
 }
