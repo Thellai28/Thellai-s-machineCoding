@@ -13,13 +13,18 @@ import java.util.Set;
 public class BookingService {
 
     public static User getUserDetails(){
+
         String name = UserInputOutputService.getUserName();
         int age = UserInputOutputService.getUserAge();
         String gender = UserInputOutputService.getUserGender();
 
         List<String> availableBerths = getAvailableBerths();
-        int idx = UserInputOutputService.displayListContentAndGetResponse(availableBerths);
-        String berthPreference = availableBerths.get(idx);
+        // if there is no seat available, the default preference will be RAC & bookRacBerth() will take care of this :
+        String berthPreference = "RAC";
+        if(availableBerths.size() > 0){
+            int idx = UserInputOutputService.displayListContentAndGetResponse(availableBerths);
+            berthPreference = availableBerths.get(idx);
+        }
 
         return new User(age, berthPreference, gender, name);
     }
@@ -29,20 +34,21 @@ public class BookingService {
 
         if( isEligibleForLowerSeat(user) ){
             Seat chosenSeat = RailwayReservationSystemRepository.getPreferredSeat(user.getBerthPreference());
-            changeSeatStatus(user, chosenSeat);
+            assignUserForSeat(user, chosenSeat);
             Ticket ticket = createTicket(user, chosenSeat);
             saveTicketIntoTicketMap(ticket);
 
             UserInputOutputService.printTicketConfirmationMessage(ticket);
         }else{
-            System.out.println("☹️☹️ Sorry Your are not eligible to select LOWER berth, choose another berth");
+            String message = "☹️☹️ Sorry Your are not eligible to select LOWER berth, choose another berth";
+            UserInputOutputService.printMessageAndAddOneBlankLine(message);
         }
     }
 
 
     public static void bookUpperOrMiddleBerth( User user ){
         Seat chosenSeat = RailwayReservationSystemRepository.getPreferredSeat(user.getBerthPreference());
-        changeSeatStatus(user, chosenSeat);
+        assignUserForSeat(user, chosenSeat);
         Ticket ticket = createTicket(user, chosenSeat);
         saveTicketIntoTicketMap(ticket);
 
@@ -51,27 +57,39 @@ public class BookingService {
 
 
     public static void bookRacBerth( User user ){
+
         boolean isRacFull =  RailwayReservationSystemRepository.isRacFull();
         if( !isRacFull ){
-            Seat chosenSeat = RailwayReservationSystemRepository.getPreferredSeat(user.getBerthPreference());
-            changeSeatStatus(user, chosenSeat);
-            addUserIntoRacQueue(user);
+            Seat racSeat = RailwayReservationSystemRepository.getPreferredSeat(user.getBerthPreference());
+            if( racSeat != null ){
+                assignUserForSeat(user, racSeat);
+                addUserIntoRacQueue(user);
 
-            Ticket ticket = createTicket(user, chosenSeat);
-            saveTicketIntoTicketMap(ticket);
+                Ticket ticket = createTicket(user, racSeat);
+                saveTicketIntoTicketMap(ticket);
 
-            UserInputOutputService.printTicketConfirmationMessage(ticket);
-        }else{
-            boolean isWaitingListFull = RailwayReservationSystemRepository.isWaitingListFull();
-
-            if( !isWaitingListFull ){
-                addUserIntoWaitingList(user);
-                System.out.println("Your preferred seat is not available, so adding you into waiting list");
+                UserInputOutputService.printTicketConfirmationMessage(ticket);
             }else{
-                System.out.println("☹️☹️ sorry, No seat available for booking ");
+                checkAndAddUserIntoWaitingList(user);
             }
+        }else{
+            checkAndAddUserIntoWaitingList(user);
         }
+    }
 
+    private static void checkAndAddUserIntoWaitingList( User user ){
+        boolean isWaitingListFull = RailwayReservationSystemRepository.isWaitingListFull();
+
+        if( !isWaitingListFull ){
+            addUserIntoWaitingList(user);
+
+            String message = "‼️‼️Your preferred seat is not available, so adding " + user.getName() + " into waiting list";
+            UserInputOutputService.printMessageAndAddOneBlankLine(message);
+        }else{
+
+            String message = "☹️☹️ sorry, No seat available for booking ";
+            UserInputOutputService.printMessageAndAddOneBlankLine(message);
+        }
     }
 
 
@@ -99,7 +117,7 @@ public class BookingService {
         return false;
     }
 
-    private static void changeSeatStatus( User user, Seat chosenSeat ){
+    private static void assignUserForSeat( User user, Seat chosenSeat ){
         chosenSeat.getUserList().add(user);
     }
     private static void addUserIntoRacQueue( User user ){
@@ -107,7 +125,7 @@ public class BookingService {
     }
 
     private static void addUserIntoWaitingList( User user ){
-        RailwayReservationSystemRepository.addIntoWaitingQueue(user);
+        RailwayReservationSystemRepository.addIntoWaitingListQueue(user);
     }
 
     private static Ticket createTicket( User user, Seat chosenSeatForBooking ){

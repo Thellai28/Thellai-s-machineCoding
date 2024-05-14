@@ -8,8 +8,8 @@ public class RailwayReservationSystem {
     private Queue<User> racQueue;
     private Queue<User> waitingListQueue;
     private List<User> childrenList;
-    private final int RAC_LIMIT = 18;
-    private final int WAITING_LIST_LIMIT = 10;
+    private final int RAC_LIMIT = 18; // 18
+    private final int WAITING_LIST_LIMIT = 10;// 10
 
     public RailwayReservationSystem() {
 
@@ -34,6 +34,7 @@ public class RailwayReservationSystem {
 
             seatList.add( newSeat );
         }
+       // seatList.add( new Seat(2, 1, "RAC"));
         return seatList;
     }
 

@@ -1,58 +1,30 @@
 package controller;
 
-import model.Seat;
+
 import model.Ticket;
-import model.User;
-import repository.RailwayReservationSystemRepository;
+
+import service.CancelBookingService;
 import service.UserInputOutputService;
+
+
 
 public class CancelBookingController {
 
     public static void handleBookingCancel(){
         int ticketNumber = UserInputOutputService.getTicketNumber();
-        Ticket ticket = retrieveTicketFromRepository(ticketNumber);
-        changeSeatStatus(ticket.getBookedSeat(), ticket.getBookedUser());
+        Ticket ticket = CancelBookingService.retrieveTicketFromRepository(ticketNumber);
+        CancelBookingService.removeUserFromSeat(ticket.getBookedSeat(), ticket.getBookedUser());
 
-        moveOneUserFromRacToConfirmation(ticket.getBookedSeat());
+        String message = "🎉🎉🎉Hi " + ticket.getBookedUser().getName() + " Your ticket is successfully cancelled";
+        UserInputOutputService.printMessageAndAddOneBlankLine(message);
 
-    }
-
-    private static Ticket retrieveTicketFromRepository( int ticketNumber ){
-        return RailwayReservationSystemRepository.getTicket(ticketNumber);
-    }
-
-    private static void changeSeatStatus( Seat seat, User user ){
-        seat.getUserList().remove(user);
-    }
-
-    private static void moveOneUserFromRacToConfirmation( Seat seat ){
-        User userFromRacQueue = RailwayReservationSystemRepository.getUserFromRacQueue();
-
-        if( userFromRacQueue != null ){
-            System.out.println("‼️‼️ moving " + userFromRacQueue.getName() +" from Rac to confirmed ticket");
-            changeSeatStatus(seat, userFromRacQueue);
-            Ticket ticket = createTicket(userFromRacQueue, seat);
-            saveTicketIntoTicketMap(ticket);
-
-            UserInputOutputService.printTicketConfirmationMessage(ticket);
-
-            moveOneUserFromWaitingListToRac();
+        if( !ticket.getBookedSeat().getBerth().equalsIgnoreCase("RAC") ){
+            // If a confirmed User cancels seat, then a RAC user will move to confirmed seat:
+            CancelBookingService.moveOneUserFromRacToConfirmation(ticket.getBookedSeat());
+        }else{
+            // If a RAC user cancels seat, we directly move one person from Waiting list to RAC
+            CancelBookingService.moveOneUserFromWaitingListToRac();
         }
-    }
 
-    private static void moveOneUserFromWaitingListToRac(){
-        User userFromWaitingList = RailwayReservationSystemRepository.getUserFromWaitingList();
-        if( userFromWaitingList != null ){
-            System.out.println("Moving" + userFromWaitingList.getName()+ " from Waiting list to RAC list");
-            RailwayReservationSystemRepository.addIntoRacQueue(userFromWaitingList);
-        }
-    }
-
-    private static Ticket createTicket( User user, Seat chosenSeatForBooking ){
-        return new Ticket(user, chosenSeatForBooking);
-    }
-
-    private static void saveTicketIntoTicketMap( Ticket ticket ){
-        RailwayReservationSystemRepository.addTicketIntoTicketMap(ticket);
     }
 }

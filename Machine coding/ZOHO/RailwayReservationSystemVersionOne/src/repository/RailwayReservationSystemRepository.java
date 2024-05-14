@@ -32,19 +32,19 @@ public class RailwayReservationSystemRepository {
     }
 
     public static boolean isRacFull(  ){
-       return railwayReservationSystem.getRacQueue().size() < railwayReservationSystem.getRAC_LIMIT();
+       return railwayReservationSystem.getRacQueue().size() >= railwayReservationSystem.getRAC_LIMIT();
     }
 
     public static boolean isWaitingListFull( ){
-        return railwayReservationSystem.getWaitingListQueue().size() < railwayReservationSystem.getWAITING_LIST_LIMIT();
+        return railwayReservationSystem.getWaitingListQueue().size() >= railwayReservationSystem.getWAITING_LIST_LIMIT();
     }
 
-    public static void addIntoWaitingQueue( User user ){
+    public static void addIntoWaitingListQueue( User user ){
         railwayReservationSystem.getWaitingListQueue().add(user);
     }
 
     public static void addIntoRacQueue( User user ){
-        railwayReservationSystem.getRacQueue().add(user);
+            railwayReservationSystem.getRacQueue().add(user);
     }
 
     public static void addTicketIntoTicketMap( Ticket ticket ){
@@ -70,7 +70,6 @@ public class RailwayReservationSystemRepository {
 
     public static User getUserFromWaitingList(){
         Queue<User> waitingListQueue = railwayReservationSystem.getWaitingListQueue();
-
         if( !waitingListQueue.isEmpty() ){
             return waitingListQueue.remove();
         }
@@ -81,4 +80,5 @@ public class RailwayReservationSystemRepository {
         Collection<Ticket> tickets = railwayReservationSystem.getTicketMap().values();
         return new ArrayList<>(tickets);
     }
+
 }

@@ -103,4 +103,10 @@ public class UserInputOutputService {
             printHorizontalLines();
         }
     }
+
+    public static void printMessageAndAddOneBlankLine( String message ){
+        System.out.println(message);
+        System.out.println();
+    }
+    
 }

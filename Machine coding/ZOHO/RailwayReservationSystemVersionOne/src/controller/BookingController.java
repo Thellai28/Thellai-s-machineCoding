@@ -3,7 +3,7 @@ package controller;
 import model.User;
 import repository.RailwayReservationSystemRepository;
 import service.BookingService;
-
+import service.UserInputOutputService;
 
 public class BookingController {
 
@@ -12,7 +12,9 @@ public class BookingController {
 
         if(user.getAge() < 5 ){
             RailwayReservationSystemRepository.getChildList().add(user); // adding children blow 5 into list :
-            System.out.println("🎉🎉🎉 No need to book ticket for children under age 5");
+
+            String message = "🎉🎉🎉 No need to book ticket for children under age 5";
+            UserInputOutputService.printMessageAndAddOneBlankLine(message);
             return;
         }
 
