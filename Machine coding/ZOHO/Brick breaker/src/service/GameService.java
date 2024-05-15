@@ -48,19 +48,8 @@ public class GameService {
         makeNewBallStartingPosition(ballCol);
     }
 
-    private static void resetBallStartingPosition( int ballRow, int ballCol ){
-        game.getBoard()[ballRow][ballCol] = game.getWallSymbol();
-    }
 
-    private static void makeNewBallStartingPosition( int ballCol ){
-        int ballRow = game.getBallRow();
-        game.getBoard()[ballRow][ballCol] = game.getBallSymbol();
-        game.setBallColumn(ballCol);
-        System.out.println("New ball position is " + ballRow +", " + ballCol);
-    }
-
-
-    //-------------------< Move left >---------------------------------------------------
+    //-----------------------------< Move left >---------------------------------------------------
     public static void moveLeft(){
         int ballRow = game.getBallRow();
         int ballCol = game.getBallColumn();
@@ -106,7 +95,7 @@ public class GameService {
     }
 
 
-    //---------------------< Move right >------------------------------------------
+    //------------------------------------< Move right >---------------------------------------------
 
     public static void moveRight(){
         int ballRow = game.getBallRow();
@@ -149,5 +138,17 @@ public class GameService {
             }
             ballCol += MOVING_DIRECTION;
         }
+    }
+
+    //---------------------< Common methods >-------------------------------------------
+    private static void resetBallStartingPosition( int ballRow, int ballCol ){
+        game.getBoard()[ballRow][ballCol] = game.getWallSymbol();
+    }
+
+    private static void makeNewBallStartingPosition( int ballCol ){
+        int ballRow = game.getBallRow();
+        game.getBoard()[ballRow][ballCol] = game.getBallSymbol();
+        game.setBallColumn(ballCol);
+        System.out.println("New ball position is " + ballRow +", " + ballCol);
     }
 }
