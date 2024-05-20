@@ -18,6 +18,13 @@ public class Employee {
         this.employeeId = (int)employeeIdGenerator++;
     }
 
+    @Override
+    public String toString() {
+        String reportingManager = (reportingTo != null ) ? reportingTo : "Im CEO";
+        return String.format("%-5d| %-20s| %-5d| %-27s| %-25s| %-20s",
+                employeeId, name, age, designation, department,reportingManager );
+    }
+
     //------------------------< Getter & setter >---------------------------------------
 
     public int getAge() {

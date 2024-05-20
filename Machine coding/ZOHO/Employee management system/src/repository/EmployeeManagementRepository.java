@@ -36,4 +36,22 @@ public class EmployeeManagementRepository {
         }
         return -1;
     }
+
+    public static Employee findEmployeeByName( String name){
+        for( Employee emp : employeeManagementSystem.getEmployeeList()){
+            if( name != null && emp.getName().equalsIgnoreCase(name) ){ // names are unique
+                return emp;
+            }
+        }
+        return null;
+    }
+
+    public static Employee findEmployeeByEmployeeId( int employeeId ){
+        for( Employee emp : employeeManagementSystem.getEmployeeList()){
+            if( emp.getEmployeeId() == employeeId ){
+                return emp;
+            }
+        }
+        return null;
+    }
 }

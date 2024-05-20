@@ -69,7 +69,7 @@ public class UserInputOutputService {
         return scanner.nextInt()-1;
     }
 
-    public static int isPlayerNeedToSearchMore(){
+    public static int isUserNeedToSearchMore(){
         System.out.println();
         System.out.println("Do you want to search more ?");
         System.out.println("1. Yes");
@@ -99,26 +99,52 @@ public class UserInputOutputService {
         return  scanner.nextInt();
     }
 
-    public static void displaySelectedEmployees( List<Employee> selectedEmployees ){
-        if( selectedEmployees == null || selectedEmployees.size() == 0 ){
-            printMessageAndHorizontalLine("❌---Sorry, there is no is no employee to display---❌");
-        }else {
-            System.out.println("✅---Printing selected employees---✅");
-            for( Employee employee : selectedEmployees ) {
-                System.out.println("Employee Id : " + employee.getEmployeeId());
-                System.out.println("Employee name : " + employee.getName());
-                System.out.println("Employee age :" + employee.getAge());
-                System.out.println("Reporting manager : " + employee.getReportingTo());
-                System.out.println("Designation : " + employee.getDesignation());
-                System.out.println("Department : " + employee.getDepartment());
-                System.out.println("-----------------------------------------------------------------------");
-            }
-        }
-    }
 
     public static void printMessageAndHorizontalLine( String message ){
         System.out.println();
         System.out.println(message);
         System.out.println();
+    }
+
+    public static void printEmployees(List<Employee> employeeList ){
+
+        if( employeeList == null || employeeList.size() == 0 ){
+            printMessageAndHorizontalLine("❌---Sorry, there is no is no employee to display---❌");
+        }else {
+            System.out.printf("%-5s| %-20s| %-5s| %-27s| %-25s| %-20s%n",
+                    "ID", "Name", "Age", "Designation",
+                    "Department", "ReportingTo");
+            System.out.println("-----------------------------------------------------------------------------------------------------------");
+
+            for (Employee employee : employeeList) {
+                System.out.println(employee);
+            }
+        }
+    }
+
+    public static void printEmployeeInReverseOrder( List<Employee> employeeTreeList ){
+        if( employeeTreeList == null || employeeTreeList.size() == 0 ){
+            printMessageAndHorizontalLine("❌---Sorry, there is no is no employee to display---❌");
+        }else {
+            System.out.printf("%-5s| %-20s| %-5s| %-27s| %-25s| %-20s%n",
+                    "ID", "Name", "Age", "Designation",
+                    "Department", "ReportingTo");
+            System.out.println("-----------------------------------------------------------------------------------------------------------");
+
+            for( int i = employeeTreeList.size()-1; i >= 0; i-- ){
+                System.out.println(employeeTreeList.get(i));
+            }
+        }
+
+    }
+
+    public static int getEmployeeId(){
+        printMessageAndHorizontalLine("Please enter the employee id");
+        return scanner.nextInt();
+    }
+
+    public static String getManagerName(){
+        printMessageAndHorizontalLine("Please enter the reporting manager name");
+        return scanner.next();
     }
 }
