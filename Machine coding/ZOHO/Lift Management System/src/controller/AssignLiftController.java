@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class assignLiftController {
+public class AssignLiftController {
     public static void assignLift(){
         List<Lift> allLifts = LiftRepository.getAllLifts();
         UserInputOutputService.printLifts(allLifts);

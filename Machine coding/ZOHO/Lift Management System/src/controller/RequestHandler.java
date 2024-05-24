@@ -6,7 +6,7 @@ public class RequestHandler {
     public static void handleRequest( int request ){
         switch (request ){
             case 1 : {
-                assignLiftController.assignLift();
+                AssignLiftController.assignLift();
                 break;
             } case 2 : {
                 Main.shutDown();
