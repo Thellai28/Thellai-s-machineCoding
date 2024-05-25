@@ -16,24 +16,24 @@ that particular event’s duration is 5 minutes.
 
 
 Input:
-Welcome event 30 mins
-C programming 45 mins
-Working with Java Beans 30 mins
-Ruby on Rails programming 60 mins
-Introduction to Groovy 60 mins
-Rails Debugging 45 mins
-Tips and tricks in C 30 mins
-Back-end development in MySQL 50 mins
-Sit down and Take notes lightning
-Clojure Introduction 45 mins
-Team Management Concepts 30 mins
-Introduction to Java Frameworks lightning
-Working with Angular JS 45 mins
-Ruby on Rails programming web development concepts 60 mins
-Introduction to Kotlin Java 60 mins
-Debugging and Testing products 60 mins
-Documenting a software 40 mins
-Server side development 60 mins
+Welcome_event_30_mins
+C_programming_45_mins
+Working_with_Java_Beans_30_mins
+Ruby_on_Rails_programming_60_mins
+Introduction_to_Groovy_60_mins
+Rails_Debugging_45_mins
+Tips_and_tricks_in_C_30_mins
+Back_end_development_in_MySQL_50_mins
+Sit_down_and_Take_notes_lightning
+Clojure_Introduction_45_mins
+Team_Management_Concepts_30_mins
+Introduction_to_Java_Frameworks_lightning
+Working_with_Angular_JS_45_mins
+Ruby_on_Rails_programming_web_development_concepts_60_mins
+Introduction_to_Kotlin_Java_60_mins
+Debugging_and_Testing_products_60_mins
+Documenting_a_software_40_mins
+Server_side_development_60_mins
 
 Output:
 
