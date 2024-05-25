@@ -1,0 +1,67 @@
+ “Event Management”. 
+
+There were around 20 events which are about to happen. Manage all the
+events according to the given conditions.
+List of events are given below none of them has any specific order to be
+followed.Conditions are :
+
+1. Event should start from 9.00 AM
+2. No overlapping or any time gap between two events.
+3. The last event should complete by 4 or to maximum by 5. There is a compulsory event called “Networking hands-on” 
+which has to be started not earlier than 4.00 PM nor later than 5.00 PM. The remaining events should be 
+scheduled following day until all the events are covered.
+4. Every event has specific duration mentioned along with it and some events contain a keyword “lightning” which means 
+that particular event’s duration is 5 minutes.
+5. There should be no event scheduled between 12 to 1 PM and kept for lunch.
+
+
+Input:
+Welcome event 30 mins
+C programming 45 mins
+Working with Java Beans 30 mins
+Ruby on Rails programming 60 mins
+Introduction to Groovy 60 mins
+Rails Debugging 45 mins
+Tips and tricks in C 30 mins
+Back-end development in MySQL 50 mins
+Sit down and Take notes lightning
+Clojure Introduction 45 mins
+Team Management Concepts 30 mins
+Introduction to Java Frameworks lightning
+Working with Angular JS 45 mins
+Ruby on Rails programming web development concepts 60 mins
+Introduction to Kotlin Java 60 mins
+Debugging and Testing products 60 mins
+Documenting a software 40 mins
+Server side development 60 mins
+
+Output:
+
+Schedule for Day 1
+
+09:00 AM Welcome event 30 mins
+09:30 AM C programming 45 mins
+10:15 AM Ruby on Rails programming 60 mins
+11:15 AM Rails Debugging 45 mins
+12:00 PM LUNCH
+01:00 PM Working with Java Beans 30 mins
+01:30 PM Introduction to Groovy 60 mins
+02:30 PM Tips and tricks in C 30 mins
+03:00 PM Back-end development in MySQL 50 mins
+03:50 PM Sit down and Take notes lightning
+03:55 PM Clojure Introduction 45 mins
+04:40 PM Networking Hands-on
+
+
+Schedule for Day 2
+
+09:30 AM Team Management Concepts 30 mins
+09:30 AM Introduction to Java Frameworks lightning
+09:35 AM Working with Angular JS 45 mins
+10:20 AM Ruby on Rails programming web development concepts 60 mins
+11:20 AM Documenting a software 40 mins
+12:00 PM LUNCH
+01:00 PM Introduction to Kotlin Java 60 mins
+02:00 PM Debugging and Testing products 60 mins
+03:00 PM Server side development 60 mins
+04:00 PM Networking Hands-on
