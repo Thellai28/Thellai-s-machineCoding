@@ -1,0 +1,19 @@
+My task was to implement “Chess Tournament” in which they gave four modules. Implementation of all four modules are important. 
+
+1. Given the number of players we have to conduct matches in pair we have to create a random method for match. if ‘player 1’ wins gave 1 point 
+else gave it to ‘player 2’ if there is a Tie then both ‘player 1 ‘ and ‘player 2’ got 0.5 point. 
+f number of players are odd then the last one gets bonus point 1 we have to display the winner of each match with both player at every round 
+we have to display score of every player, and we have to assign match according to there score and once two player played a match they are not allowed to play
+ match in the same pair we have to display the winner of the “Chess Tournament” and also the cumulative score (bonus points are not allowed to add).(Duration-3 hrs)
+
+A Technical team Member is there you can discuss if you have any problem they can explain problem to you if require.
+
+They can ask anything from your code so prepared with all your concepts .’
+
+Once i completed all modules i shown it to a Technical team Member, he asked me some questions from code, he wants me to explain 
+the code i explain full code step by step with mentioning all the Object Oriented Programming Concepts. Then at the same place he asked me 
+some question related to my Projects that done in my academics.some other questions from my resume, and also some HR Questions like  
+(about family member, about parents occupation, native place )
+
+*Note:Try  to use Object Oriented Programming Concepts and Data Structure . your code should be clean can be easy to understand. 
+try to show every module once you complete it, Intersection with member is very useful
