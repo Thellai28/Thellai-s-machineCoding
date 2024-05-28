@@ -1,5 +1,6 @@
 package service;
 
+import model.SettleUpPair;
 import model.SplitMethods;
 
 import java.util.List;
@@ -84,6 +85,17 @@ public class UserInputOutputService {
             System.out.println(i+1 +". " + list.get(i) + ". ");
         }
     }
+
+    public static int displaySettleUpPairList( List<SettleUpPair> settleUpPairList ){
+        printMessageAndOneLine("✅---Displaying settle up List---✅");
+        for( int i = 0; i < settleUpPairList.size(); i++ ){
+            System.out.println(i+1 +". " + settleUpPairList.get(i).getDescription()+ ".");
+        }
+
+        return scanner.nextInt() -1; // 1 based to 0 based :
+    }
+
+
     public static int displaySplitMethodsAndGetChoice( List<SplitMethods> list ){
         printMessageAndOneLine("😄-Please select an option from below");
         for( int i = 0; i< list.size(); i++ ){

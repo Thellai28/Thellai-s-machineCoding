@@ -1,5 +1,7 @@
 package controller;
 
+import service.UserInputOutputService;
+
 public class RequestHandler {
     public static void handleRequest( int request ){
         switch (request){
@@ -15,8 +17,24 @@ public class RequestHandler {
             } case 4 : {
                 PendingExpenseController.generatePendingExpenses();
                 break;
+            } case 5 : {
+                SettleUpController.settleUp();
+                break;
+            } case 6 :{
+                TransactionsController.printTransactions();
+                break;
+            } case 7 : {
+                GroupExpenseController.showGroupExpense();
+                break;
+            } case 8 : {
+                AuthController.logOut();
+                break;
+            } case 9 :{
+                Main.shutDown();
+                break;
+            } default:{
+                UserInputOutputService.printMessageAndOneLine("❌---Invalid input---❌");
             }
-
         }
     }
 }

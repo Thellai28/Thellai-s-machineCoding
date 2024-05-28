@@ -1,6 +1,4 @@
 package controller;
-
-import model.User;
 import repository.SplitWiseRepository;
 import service.UserInputOutputService;
 
