@@ -4,20 +4,20 @@ public class Split {
     private static int idGenerator = 1;
     private int id;
     private String paidBy;
-    private String Recipient;
+    private String recipient;
     private double totalAmount;
-    private SplitMethods splitMethods;
+    private SplitMethod splitMethod;
     private float splitPercentage;
     private double amountToPay;
     private PaymentStatus paymentStatus;
 
     public Split( double amountToPay, String paidBy,
-                  String recipient, SplitMethods splitMethods,
+                  String recipient, SplitMethod splitMethod,
                   double totalAmount ) {
         this.amountToPay = amountToPay;
         this.paidBy = paidBy;
-        Recipient = recipient;
-        this.splitMethods = splitMethods;
+        this.recipient = recipient;
+        this.splitMethod = splitMethod;
         this.totalAmount = totalAmount;
         this.id = idGenerator++;
         this.splitPercentage = 0f;
@@ -26,6 +26,12 @@ public class Split {
 
     public Split() {
         this.id = idGenerator++;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%-12s | %-12s | %-12.2f | %-17s | %-15.2f |", paidBy, recipient,
+                totalAmount, splitMethod, amountToPay);
     }
 
     //----------------< Getters & Setters >----------------------------------
@@ -43,11 +49,11 @@ public class Split {
     }
 
     public String getRecipient() {
-        return Recipient;
+        return recipient;
     }
 
-    public SplitMethods getSplitMethods() {
-        return splitMethods;
+    public SplitMethod getSplitMethods() {
+        return splitMethod;
     }
 
     public float getSplitPercentage() {
@@ -67,11 +73,11 @@ public class Split {
     }
 
     public void setRecipient( String recipient ) {
-        Recipient = recipient;
+        this.recipient = recipient;
     }
 
-    public void setSplitMethods( SplitMethods splitMethods ) {
-        this.splitMethods = splitMethods;
+    public void setSplitMethods( SplitMethod splitMethod ) {
+        this.splitMethod = splitMethod;
     }
 
     public void setSplitPercentage( float splitPercentage ) {

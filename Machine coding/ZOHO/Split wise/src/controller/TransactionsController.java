@@ -7,7 +7,7 @@ public class TransactionsController {
 
     public static void printTransactions(){
         User loggedInUser = AuthController.getLoggedInUser();
-        if( loggedInUser.getTransactionHistory().size() == 0 ){
+        if( loggedInUser.getTransactionHistory().isEmpty()){
             UserInputOutputService
                     .printMessageAndOneLine("⚠️---There is no transactions to display---⚠️");
         }else{

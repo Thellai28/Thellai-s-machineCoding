@@ -2,11 +2,11 @@ package model;
 
 public class Payable {
     private static int idGenerator = 1;
-    private int id;
+    private final int id;
     private String from;
     private String to;
     private double amount;
-    private String groupName;
+    private final String groupName;
     private PaymentStatus paymentStatus;
 
     public Payable( double amount, String from, String groupName, String to ) {

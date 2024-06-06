@@ -11,16 +11,14 @@ public class AuthController {
     public static void logIn(){
         UserInputOutputService.printMessageAndOneLine("💸---Welcome to Split wise application---💸");
         String username = UserInputOutputService.getUserName();
-        String password = UserInputOutputService.getPassword();
+        String password = UserInputOutputService.getPassword("😄-Please enter your password");
 
         if( authenticateUser(username, password) ){
             loggedInUser = SplitWiseRepository.getUserFromUserObjectsMap(username);
             loggedInUserName = username;
-            UserInputOutputService.printMessageAndOneLine("🎊🎊---Authentication SuccessFul---🎊🎊"+
-                    "\n----------------------------------------------------------------------------------------------\n");
+            UserInputOutputService.printMessageAndOneLine( "🎊🎊---Authentication SuccessFul---🎊🎊 \n" );
         }else{
-            UserInputOutputService.printMessageAndOneLine("❌---Authentication Failed---❌" +
-                    "\n----------------------------------------------------------------------------------------------");
+            UserInputOutputService.printMessageAndOneLine("❌---Authentication Failed---❌ \n" );
         }
     }
 

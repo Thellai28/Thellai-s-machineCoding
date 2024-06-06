@@ -10,14 +10,15 @@ public class Main {
 
         while( isSplitWiseRunning ){
             if( AuthController.getLoggedInUser() == null ){
-                AuthController.logIn();
+                int initialRequest = UserInputOutputService.displayInitialMenu();
+                RequestHandler.handleInitialRequest(initialRequest);
                 continue; // Application will not move further until the user is logged in :
             }
             int request = UserInputOutputService.displayMainMenu();
             RequestHandler.handleRequest(request);
         }
-
     }
+
     public static void shutDown(){
         UserInputOutputService.closeScanner();
         UserInputOutputService.printMessageAndOneLine("⚠️---Shutting down Split wise---⚠️");

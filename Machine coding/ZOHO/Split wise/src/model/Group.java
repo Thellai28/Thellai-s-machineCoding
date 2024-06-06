@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Group {
     private static int idGenerator = 1;
-    private int id;
-    private String groupName;
-    private String admin;
-    private List<String> participantsList;
-    private List<Expense> expenseList;
-    private List<Payable> payableList;
-    private List<String> transactionHistory;
+    private final int id;
+    private final String groupName;
+    private final String admin;
+    private final List<String> participantsList;
+    private final List<Expense> expenseList;
+    private final List<Payable> payableList;
+    private final List<String> transactionHistory;
 
     public Group( String admin, String groupName ) {
         this.admin = admin;

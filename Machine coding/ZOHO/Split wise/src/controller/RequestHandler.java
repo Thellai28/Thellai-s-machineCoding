@@ -37,4 +37,18 @@ public class RequestHandler {
             }
         }
     }
+
+    public static void handleInitialRequest( int request ){
+        switch (request){
+            case 1 :{
+                AuthController.logIn();
+                break;
+            } case 2 : {
+                GroupAndUserController.createNewUser(null);
+                break;
+            } default:{
+                UserInputOutputService.printMessageAndOneLine("❌---Invalid input---❌");
+            }
+        }
+    }
 }

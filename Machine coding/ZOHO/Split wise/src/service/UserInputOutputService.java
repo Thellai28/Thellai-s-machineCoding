@@ -1,8 +1,9 @@
 package service;
 
+import model.Expense;
 import model.SettleUpPair;
-import model.SplitMethods;
-
+import model.Split;
+import model.SplitMethod;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,6 +31,7 @@ public class UserInputOutputService {
     }
 
     public static int displayMainMenu(){
+        printTwoEmptyLines();
         System.out.println("1. Create new Group");
         System.out.println("2. Add Users into group");
         System.out.println("3. Add expense into a group");
@@ -43,13 +45,22 @@ public class UserInputOutputService {
         return scanner.nextInt();
     }
 
+    public static int displayInitialMenu(){
+        printTwoEmptyLines();
+        System.out.println("1. Log-in");
+        System.out.println("2. Create new Account");
+        return scanner.nextInt();
+
+    }
+
     public static String getUserName(){
+        printTwoEmptyLines();
         printMessageAndOneLine("😄-Please enter your user name");
         return scanner.next();
     }
 
-    public static String getPassword() {
-        printMessageAndOneLine("😄-Please enter your password");
+    public static String getPassword(String message ) {
+        printMessageAndOneLine(message);
         return scanner.next();
     }
 
@@ -59,7 +70,7 @@ public class UserInputOutputService {
     }
 
     public static int needToAddNewUsers(){
-        printMessageAndOneLine("🤔 Do you need to add new users into the group ?");
+        printMessageAndOneLine("❓ Do you need to add new users into the group ?");
         System.out.println("1. Yes");
         System.out.println("2. No");
 
@@ -72,6 +83,7 @@ public class UserInputOutputService {
     }
 
     public static int displayListAndGetChoice( List<String> list  ){
+
         printMessageAndOneLine("😄-Please select an option from below");
         for( int i = 0; i< list.size(); i++ ){
             System.out.println(i+1 +". " + list.get(i) + ". ");
@@ -96,7 +108,7 @@ public class UserInputOutputService {
     }
 
 
-    public static int displaySplitMethodsAndGetChoice( List<SplitMethods> list ){
+    public static int displaySplitMethodsAndGetChoice( List<SplitMethod> list ){
         printMessageAndOneLine("😄-Please select an option from below");
         for( int i = 0; i< list.size(); i++ ){
             System.out.println(i+1 +". " + list.get(i) + ". ");
@@ -154,7 +166,27 @@ public class UserInputOutputService {
         return scanner.nextDouble();
     }
 
+    public static void printExpenses( List<Expense> expenses ){
+        if(!expenses.isEmpty()){
+            printMessageAndOneLine("✅---< Printing expenses >---✅");
+            for( Expense exp : expenses ){
+                System.out.println("Description : " + exp.getDescription());
 
+                System.out.printf("%-12s | %-12s | %-12s | %-17s | %-15 |", "Paid by", "Recipient",
+                        "Total Amount", "Split method", "Payable amount " +
+                                "%n ---------------------------------------");
+                for(Split split : exp.getSplitList() ){
+                    System.out.println(split);
+                }
+            }
+        }else{
+            printMessageAndOneLine("‼️---< Sorry There is not split to print >---‼️");
+        }
+    }
 
+    private static void printTwoEmptyLines(){
+        System.out.println();
+        System.out.println();
+    }
 
 }

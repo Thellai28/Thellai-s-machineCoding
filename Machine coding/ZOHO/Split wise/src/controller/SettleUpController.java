@@ -13,7 +13,7 @@ public class SettleUpController {
         User loggedInUser = AuthController.getLoggedInUser();
         List<Payable> shouldPayPayables = getUserShouldPayPayables(loggedInUser);
 
-        if (shouldPayPayables.size() == 0 ){
+        if (shouldPayPayables.isEmpty()){
             UserInputOutputService.printMessageAndOneLine("🪙---There is no pending expense from User side---🪙");
         }else{
             List<SettleUpPair> settleUpPairList = generateSettleUpPairFromPayables(shouldPayPayables,

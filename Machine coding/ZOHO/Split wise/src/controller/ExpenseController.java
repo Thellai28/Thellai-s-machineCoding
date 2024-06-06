@@ -9,6 +9,7 @@ import java.util.*;
 
 public class ExpenseController {
     public static void createNewExpense(){
+
         Group selectedGroup = CommonUtilsService.getGroupName();
         String expenseDescription = UserInputOutputService.getDescriptionOfExpense();
         List<String> usersInvolvedInExpense = getUsersInvolvedInExpense(selectedGroup);
@@ -24,41 +25,40 @@ public class ExpenseController {
 
 
     private static List<String> getUsersInvolvedInExpense( Group group ){
-        List<String> participantsList = group.getParticipantsList();
-        Set<String> userNameSet = new HashSet<>(); // user might select same name again and again :
+        // I don't want to modify the original List :
+        List<String> duplicateParticipantList = new ArrayList<>(group.getParticipantsList());
+        List<String> selectedUsersList = new ArrayList<>();
         boolean wantToChooseMore;
 
         do{
-            int idx = UserInputOutputService.displayListAndGetChoice(participantsList);
-            userNameSet.add( participantsList.get(idx));
-            wantToChooseMore = ( UserInputOutputService.wantToChooseMore() == 2 )? false : true;
-        }while( wantToChooseMore );
+            int idx = UserInputOutputService.displayListAndGetChoice(duplicateParticipantList);
+            String currSelectedUser = duplicateParticipantList.get(idx);
+            duplicateParticipantList.remove(currSelectedUser);
+            selectedUsersList.add( currSelectedUser );
+            // I want to store false, if response is '2'
+            wantToChooseMore = UserInputOutputService.wantToChooseMore() != 2;
 
-        // Sometime user might not be included in the expense, but he might have paid the bill :
-        int isUserInvolved = UserInputOutputService.isUserInvolvedInCurrentExpense();
-        if( isUserInvolved == 1 ){
-            userNameSet.add( AuthController.getLoggedInUserName() );
-        }
+        }while( wantToChooseMore && !duplicateParticipantList.isEmpty() );
 
-        return new ArrayList<>(userNameSet);
+        return selectedUsersList;
     }
 
     private static void createSplits( Expense expense, Group group){
-        SplitMethods preferredSplitMethod = getPreferredSplitMethod();
+        SplitMethod preferredSplitMethod = getPreferredSplitMethod();
 
-        if( preferredSplitMethod.equals(SplitMethods.EQUAL_SPLIT) ){
+        if( preferredSplitMethod.equals(SplitMethod.EQUAL_SPLIT) ){
             generateEqualSplits( expense, group );
-        }else if( preferredSplitMethod.equals(SplitMethods.PERCENTAGE_SPLIT) ){
+        }else if( preferredSplitMethod.equals(SplitMethod.PERCENTAGE_SPLIT) ){
             generatePercentageSplits( expense, group );
         }else {
             generateExactSplit( expense, group);
         }
     }
 
-    private static SplitMethods getPreferredSplitMethod(){
-        List<SplitMethods> splitMethodsList = Arrays.asList(SplitMethods.values());
-        int idx = UserInputOutputService.displaySplitMethodsAndGetChoice(splitMethodsList);
-        return  splitMethodsList.get(idx);
+    private static SplitMethod getPreferredSplitMethod(){
+        List<SplitMethod> splitMethodList = Arrays.asList(SplitMethod.values());
+        int idx = UserInputOutputService.displaySplitMethodsAndGetChoice(splitMethodList);
+        return  splitMethodList.get(idx);
     }
 
 
@@ -75,7 +75,7 @@ public class ExpenseController {
 
     private static Payable getPayableFromPayableList( Split split,List<Payable> payableListFromGroup ){
 
-        if( payableListFromGroup.size() > 0 ){
+        if(!payableListFromGroup.isEmpty()){
             for( Payable payable : payableListFromGroup ){
                 if( payable.getFrom().equals(split.getPaidBy()) && payable.getTo().equals(split.getRecipient())){
                     return payable;
@@ -137,7 +137,10 @@ public class ExpenseController {
             if( user.equals(expense.getPaidBy()) ) continue; // sometimes the user might be the same person who paid :
 
             Split split = new Split(amountPerPerson, expense.getPaidBy(),user,
-                    SplitMethods.EQUAL_SPLIT, totalAmount);
+                    SplitMethod.EQUAL_SPLIT, totalAmount);
+
+            // Adding newly created split into the expense :
+            expense.getSplitList().add(split);
 
             createOrUpdatePayableFromSplit(split, group);
         }
@@ -146,20 +149,20 @@ public class ExpenseController {
     private static void generatePercentageSplits( Expense expense, Group group ){
         List<String>usersInvolvedList = expense.getUsersInvolved();
         double totalAmount = expense.getAmountPaid();
+        int balancePercentage = 100;
 
         if( usersInvolvedList.contains(expense.getPaidBy()) ){
             int percentage = UserInputOutputService.getPercentageOfPaidUserPortion();
             totalAmount -= calculatePercentageAmount(percentage, totalAmount);
+            balancePercentage -= percentage;
             /*
                 If the list contains paid-by user, that means in the total expense amount, paid-by user
                 expense is also involved.
                 So we remove the portion or percentage of amount that user paid to himself
             */
         }
-        int balancePercentage = 100;
         int usersRemaining = usersInvolvedList.size();
-
-
+        
         for( String user : usersInvolvedList ){
             if( user.equals(expense.getPaidBy()) ){
                 usersRemaining--;
@@ -168,8 +171,12 @@ public class ExpenseController {
             }
             int currUserPercentage = UserInputOutputService.getPercentage( user, balancePercentage, usersRemaining );
             double currentUserPayableAmount = calculatePercentageAmount(currUserPercentage, totalAmount);
+
             Split split = new Split(currentUserPayableAmount,
-                    expense.getPaidBy(), user, SplitMethods.PERCENTAGE_SPLIT, totalAmount);
+                    expense.getPaidBy(), user, SplitMethod.PERCENTAGE_SPLIT, totalAmount);
+
+            // Adding newly created split into the expense :
+            expense.getSplitList().add(split);
 
             createOrUpdatePayableFromSplit(split, group);
 
@@ -196,7 +203,10 @@ public class ExpenseController {
 
             double currentUserExactAmount = UserInputOutputService.getExactAmount(user, totalAmount, usersRemaining);
             Split split = new Split(currentUserExactAmount, expense.getPaidBy(),
-                    user, SplitMethods.EXACT_AMOUNT, totalAmount);
+                    user, SplitMethod.EXACT_AMOUNT, totalAmount);
+
+            // Adding newly created split into the expense :
+            expense.getSplitList().add(split);
 
             createOrUpdatePayableFromSplit(split, group);
             totalAmount -= currentUserExactAmount;

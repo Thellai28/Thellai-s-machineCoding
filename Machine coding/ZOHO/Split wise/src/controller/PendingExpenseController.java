@@ -17,7 +17,7 @@ public class PendingExpenseController {
 
     private static void handleUserShouldPayExpenses(User user ){
         List<String> shouldPayList = getUserShouldPayExpenses(user);
-        if( shouldPayList.size() == 0 ){
+        if(shouldPayList.isEmpty()){
             UserInputOutputService.printMessageAndOneLine("✅---User Paid all the pending expenses---✅");
         }else{
             UserInputOutputService
@@ -54,7 +54,7 @@ public class PendingExpenseController {
     private static void handleUserShouldReceiveExpenses( User user ){
         List<String>shouldRecieveList = generateUserShouldReceiveExpense(user);
 
-        if( shouldRecieveList.size() == 0 ){
+        if(shouldRecieveList.isEmpty()){
             UserInputOutputService.printMessageAndOneLine("✅---User received All pending expenses---✅");
         }else{
             UserInputOutputService
