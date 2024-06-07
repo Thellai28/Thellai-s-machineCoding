@@ -82,9 +82,9 @@ public class UserInputOutputService {
         return scanner.nextInt();
     }
 
-    public static int displayListAndGetChoice( List<String> list  ){
+    public static int displayListAndGetChoice( List<String> list , String message ){
 
-        printMessageAndOneLine("😄-Please select an option from below");
+        printMessageAndOneLine(message);
         for( int i = 0; i< list.size(); i++ ){
             System.out.println(i+1 +". " + list.get(i) + ". ");
         }
@@ -166,23 +166,25 @@ public class UserInputOutputService {
         return scanner.nextDouble();
     }
 
-    public static void printExpenses( List<Expense> expenses ){
-        if(!expenses.isEmpty()){
+    public static void printExpenses(List<Expense> expenses) {
+        if (!expenses.isEmpty()) {
             printMessageAndOneLine("✅---< Printing expenses >---✅");
-            for( Expense exp : expenses ){
-                System.out.println("Description : " + exp.getDescription());
+            for (Expense exp : expenses) {
+                printMessageAndOneLine("💸 Description : " + exp.getDescription() +
+                        "💸\n----------------------------------------------------------------------------------");
 
-                System.out.printf("%-12s | %-12s | %-12s | %-17s | %-15 |", "Paid by", "Recipient",
-                        "Total Amount", "Split method", "Payable amount " +
-                                "%n ---------------------------------------");
-                for(Split split : exp.getSplitList() ){
+                System.out.printf("%-12s | %-12s | %-12s | %-17s | %-15s%n",
+                        "Paid by", "Recipient", "Total Amount", "Split method", "Payable amount");
+                System.out.println("----------------------------------------------------------------------------------");
+                for (Split split : exp.getSplitList()) {
                     System.out.println(split);
                 }
             }
-        }else{
+        } else {
             printMessageAndOneLine("‼️---< Sorry There is not split to print >---‼️");
         }
     }
+
 
     private static void printTwoEmptyLines(){
         System.out.println();
