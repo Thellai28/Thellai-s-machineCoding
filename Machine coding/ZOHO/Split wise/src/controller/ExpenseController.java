@@ -136,20 +136,20 @@ public class ExpenseController {
         int membersInvolved = expense.getUsersInvolved().size();
         double amountPerPerson = totalAmount / membersInvolved; // type promotion: double/int = double:
 
-        for( String user : expense.getUsersInvolved() ){
-            Split split = new Split(amountPerPerson, expense.getPaidBy(),user,
+        for( String involvedUser : expense.getUsersInvolved() ){
+            Split split = new Split(amountPerPerson, expense.getPaidBy(),involvedUser,
                     SplitMethod.EQUAL_SPLIT, totalAmount);
 
             // Adding newly created split into the expense :
             expense.getSplitList().add(split);
 
             // Creating or updating payable
-            if( !user.equals(expense.getPaidBy()) ){
+            if( !involvedUser.equals(expense.getPaidBy()) ){
                 createOrUpdatePayableFromSplit(split, group);
                 /*
                     If the creator of the expense is involved in the split, we don't have to create payable for the
-                    amount the user paid for himself, because if you try to create payable for himself, the 'From' and
-                    'To' will have the same name, to avoid this we use -> !user.equals(expense.getPaidBy())
+                    amount the involvedUser paid for himself, because if you try to create payable for himself, the 'From' and
+                    'To' will have the same name, to avoid this we use -> !involvedUser.equals(expense.getPaidBy())
                 */
             }
         }
@@ -163,23 +163,23 @@ public class ExpenseController {
 
         int usersRemaining = usersInvolvedList.size();
         
-        for( String user : usersInvolvedList ){
-            int currUserPercentage = UserInputOutputService.getPercentage( user, balancePercentage, usersRemaining );
+        for( String involvedUser : usersInvolvedList ){
+            int currUserPercentage = UserInputOutputService.getPercentage( involvedUser, balancePercentage, usersRemaining );
             double currentUserPayableAmount = calculatePercentageAmount(currUserPercentage, totalAmount);
 
             Split split = new Split(currentUserPayableAmount,
-                    expense.getPaidBy(), user, SplitMethod.PERCENTAGE_SPLIT, totalAmount);
+                    expense.getPaidBy(), involvedUser, SplitMethod.PERCENTAGE_SPLIT, totalAmount);
 
             // Adding newly created split into the expense :
             expense.getSplitList().add(split);
 
             // creating or updating payable :
-            if( !user.equals(expense.getPaidBy()) ){
+            if( !involvedUser.equals(expense.getPaidBy()) ){
                 createOrUpdatePayableFromSplit(split, group);
                 /*
                     If the creator of the expense is involved in the split, we don't have to create payable for the
-                    amount the user paid for himself, because if you try to create payable for himself, the 'From' and
-                    'To' will have the same name, to avoid this we use -> !user.equals(expense.getPaidBy())
+                    amount the involvedUser paid for himself, because if you try to create payable for himself, the 'From' and
+                    'To' will have the same name, to avoid this we use -> !involvedUser.equals(expense.getPaidBy())
                 */
             }
 
@@ -195,22 +195,22 @@ public class ExpenseController {
 
         int usersRemaining = usersInvolvedList.size();
 
-        for( String user : usersInvolvedList ){
+        for( String involvedUser : usersInvolvedList ){
 
-            double currentUserExactAmount = UserInputOutputService.getExactAmount(user, totalAmount, usersRemaining);
+            double currentUserExactAmount = UserInputOutputService.getExactAmount(involvedUser, totalAmount, usersRemaining);
             Split split = new Split(currentUserExactAmount, expense.getPaidBy(),
-                    user, SplitMethod.EXACT_AMOUNT, expense.getAmountPaid());
+                    involvedUser, SplitMethod.EXACT_AMOUNT, expense.getAmountPaid());
 
             // Adding newly created split into the expense :
             expense.getSplitList().add(split);
 
             // creating or updating payable :
-            if( !user.equals(expense.getPaidBy()) ){
+            if( !involvedUser.equals(expense.getPaidBy()) ){
                 createOrUpdatePayableFromSplit(split, group);
                 /*
                     If the creator of the expense is involved in the split, we don't have to create payable for the
-                    amount the user paid for himself, because if you try to create payable for himself, the 'From' and
-                    'To' will have the same name, to avoid this we use -> !user.equals(expense.getPaidBy())
+                    amount the involvedUser paid for himself, because if you try to create payable for himself, the 'From' and
+                    'To' will have the same name, to avoid this we use -> !involvedUser.equals(expense.getPaidBy())
                 */
             }
 

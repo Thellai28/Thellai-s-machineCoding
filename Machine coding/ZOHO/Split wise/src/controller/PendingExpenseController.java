@@ -18,7 +18,7 @@ public class PendingExpenseController {
     private static void handleUserShouldPayExpenses(User user ){
         List<String> shouldPayList = getUserShouldPayExpenses(user);
         if(shouldPayList.isEmpty()){
-            UserInputOutputService.printMessageAndOneLine("✅---User Paid all the pending expenses---✅");
+            UserInputOutputService.printMessageAndOneLine("✅---No pending expense from userSide---✅");
         }else{
             UserInputOutputService
                     .displayList(shouldPayList,
@@ -36,7 +36,8 @@ public class PendingExpenseController {
 
                 shouldPayList.add(
                         String.format("%s should PAY %.2f to %s in %s group",
-                                payable.getFrom(), payable.getAmount(), payable.getTo(), payable.getGroupName() )
+                                payable.getFrom(), Math.abs(payable.getAmount()),
+                                payable.getTo(), payable.getGroupName() )
                 );
 
             }else if( payable.getTo().equals(user.getName()) && payable.getAmount() < 0d
@@ -44,7 +45,8 @@ public class PendingExpenseController {
 
                 shouldPayList.add(
                         String.format("%s should PAY %.2f to %s in %s group",
-                                payable.getTo(), payable.getAmount(), payable.getFrom(), payable.getGroupName() )
+                                payable.getTo(), Math.abs(payable.getAmount()),
+                                payable.getFrom(), payable.getGroupName() )
                 );
             }
         }
@@ -76,7 +78,8 @@ public class PendingExpenseController {
 
                 shouldReceiveList.add(
                         String.format("%s should RECEIVE %.2f to %s in %s group",
-                                payable.getFrom(), payable.getAmount(), payable.getTo(), payable.getGroupName() )
+                                payable.getFrom(), Math.abs(payable.getAmount()),
+                                payable.getTo(), payable.getGroupName() )
                 );
 
             }else if( payable.getTo().equals(user.getName()) && payable.getAmount() > 0d
@@ -84,7 +87,8 @@ public class PendingExpenseController {
 
                 shouldReceiveList.add(
                         String.format("%s should RECEIVE %.2f to %s in %s group",
-                                payable.getTo(), payable.getAmount(), payable.getFrom(), payable.getGroupName() )
+                                payable.getTo(), Math.abs(payable.getAmount()),
+                                payable.getFrom(), payable.getGroupName() )
                 );
             }
         }

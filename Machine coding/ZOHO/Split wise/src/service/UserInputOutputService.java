@@ -191,4 +191,16 @@ public class UserInputOutputService {
         System.out.println();
     }
 
+    public static int getFullOrPartialSettleUpChoice(){
+        printMessageAndOneLine("😉- Choose the mode of settlement");
+        System.out.println("1. Partial settlement");
+        System.out.println("2. Full settlement");
+        return scanner.nextInt();
+    }
+
+    public static double getSettleUpAmount(){
+        printMessageAndOneLine("😉-Please enter the settle up amount ");
+        return scanner.nextDouble();
+    }
+
 }

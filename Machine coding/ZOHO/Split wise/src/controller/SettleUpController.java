@@ -16,16 +16,26 @@ public class SettleUpController {
         if (shouldPayPayables.isEmpty()){
             UserInputOutputService.printMessageAndOneLine("🪙---There is no pending expense from User side---🪙");
         }else{
-            List<SettleUpPair> settleUpPairList = generateSettleUpPairFromPayables(shouldPayPayables,
-                    loggedInUser );
+           SettleUpPair selectedSettleUpPair = createSettleUpPairAndChooseOne(shouldPayPayables, loggedInUser);
 
-            int idx = UserInputOutputService.displaySettleUpPairList(settleUpPairList);
-            SettleUpPair selectedSettleUpPair = settleUpPairList.get(idx);
-
-            settlePayment(selectedSettleUpPair);
-            createTransactions(selectedSettleUpPair.getPayable());
+            int settlementPreference = UserInputOutputService.getFullOrPartialSettleUpChoice();
+            if( settlementPreference == 2 ){
+                settleFullPayment(selectedSettleUpPair);
+            }else{
+                settlePartialPayment(selectedSettleUpPair, loggedInUser);
+            }
         }
+    }
 
+
+
+    private static SettleUpPair createSettleUpPairAndChooseOne(List<Payable> shouldPayPayables,
+                                                               User loggedInUser){
+        List<SettleUpPair> settleUpPairList = generateSettleUpPairFromPayables(shouldPayPayables,
+                loggedInUser );
+
+        int idx = UserInputOutputService.displaySettleUpPairList(settleUpPairList);
+        return settleUpPairList.get(idx);
     }
 
     private static List<Payable> getUserShouldPayPayables( User user ){
@@ -59,11 +69,13 @@ public class SettleUpController {
             if( payable.getFrom().equals(user.getName()) ){
 
                 description = String.format("%s should pay %s an amount of %.2f in group : %s",
-                        user.getName(), payable.getTo(), payable.getAmount(), payable.getGroupName());
+                        user.getName(), payable.getTo(), Math.abs(payable.getAmount()),
+                        payable.getGroupName());
 
             }else{
                 description = String.format("%s should pay %s an amount of %.2f in group : %s",
-                        payable.getTo(), user.getName(), payable.getAmount(), payable.getGroupName());
+                        user.getName(), payable.getFrom(), Math.abs(payable.getAmount()),
+                        payable.getGroupName());
             }
 
             settleUpPairList.add( new SettleUpPair(description, payable) );
@@ -71,27 +83,49 @@ public class SettleUpController {
         return  settleUpPairList;
     }
 
-    private static void settlePayment( SettleUpPair settleUpPair ){
+    private static void settleFullPayment( SettleUpPair settleUpPair ){
         Payable payable = settleUpPair.getPayable();
         payable.setPaymentStatus(PaymentStatus.PAID);
+        createTransactions(settleUpPair.getPayable(), payable.getAmount() );
     }
 
-    private static void createTransactions( Payable payable ){
+    private static void settlePartialPayment( SettleUpPair settleUpPair, User loggedInUser ){
+        double settleUpAmount = UserInputOutputService.getSettleUpAmount();
+        Payable payable = settleUpPair.getPayable();
+
+        if( settleUpAmount >= Math.abs(payable.getAmount()) ){ // The amount in payable might be negative :
+            settleFullPayment(settleUpPair);
+            return;
+        }
+
+        if( payable.getFrom().equals(loggedInUser.getName())
+                && payable.getAmount() > 0d ){
+            payable.setAmount( payable.getAmount() - settleUpAmount );
+
+        }else if( payable.getTo().equals(loggedInUser.getName())
+                && payable.getAmount() < 0d ){
+            payable.setAmount( payable.getAmount() + settleUpAmount );
+        }
+
+        createTransactions( payable, settleUpAmount );
+    }
+
+    private static void createTransactions( Payable payable, double paidMoney ){
 
         if( payable.getAmount() > 0d ){
 
             createMoneySentTransaction(payable.getFrom(), payable.getTo(),
-                    payable.getGroupName(), payable.getAmount());
+                    payable.getGroupName(), paidMoney);
 
             createMoneyReceivedTransaction(payable.getFrom(), payable.getTo(),
-                    payable.getGroupName(), payable.getAmount());
+                    payable.getGroupName(), paidMoney);
 
         }else{
             createMoneySentTransaction(payable.getTo(), payable.getFrom(),
-                    payable.getGroupName(), payable.getAmount());
+                    payable.getGroupName(), paidMoney);
 
             createMoneyReceivedTransaction(payable.getTo(), payable.getFrom(),
-                    payable.getGroupName(), payable.getAmount());
+                    payable.getGroupName(), paidMoney);
         }
     }
 
