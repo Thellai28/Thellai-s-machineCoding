@@ -1,0 +1,25 @@
+Here we have to develop a simple railway ticket booking application.
+Develop a Railway Reservation Application contains
+
+1.AC coach
+2.Non AC coach
+3. Seater
+
+each should contain 60 seats and 10 waiting list max allowed rest request should be
+cancelled. you should have
+
+1.Ticket Booking
+2.Ticket Cancellation
+3.Status Checking
+-----------------------------
+
+Here they asked us to create a “Railway reservation system” and gave us 4 modules.
+The modules were:
+ 1. Booking
+ 2. Availability checking
+ 3. Cancellation
+ 4. Prepare chart
+
+We were asked to create the modules for representing each data first and to
+continue with the implementation phase.
+
